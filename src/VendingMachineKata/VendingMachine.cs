@@ -9,7 +9,9 @@
         {
             if (oneTimeDisplay != null)
             {
-                return oneTimeDisplay;
+                var temp = oneTimeDisplay;
+                oneTimeDisplay = null;
+                return temp;
             }
 
             if (this.valueInserted == 0)

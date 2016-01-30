@@ -45,26 +45,27 @@ namespace VendingMachineKata
 
         public void SelectProduct(Product productName)
         {
-            decimal price;
-            if (TryGetProductPrice(productName, out price))
+            decimal price = GetProductPrice(productName);
+            if (valueInserted >= price)
             {
-                this.oneTimeDisplay = $"PRICE {price:C}";
+                oneTimeDisplay = "THANK YOU";
+                valueInserted = 0m;
+                return;
             }
+
+            this.oneTimeDisplay = $"PRICE {price:C}";
         }
 
-        private bool TryGetProductPrice(Product productName, out decimal price)
+        private decimal GetProductPrice(Product productName)
         {
             switch (productName)
             {
                 case Product.Cola:
-                    price = 1m;
-                    return true;
+                    return 1m;
                 case Product.Chips:
-                    price = .50m;
-                    return true;
+                    return .50m;
                 case Product.Candy:
-                    price = .65m;
-                    return true;
+                    return .65m;
             }
 
             throw new ArgumentOutOfRangeException("That product is not supported");

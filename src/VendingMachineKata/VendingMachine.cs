@@ -75,6 +75,12 @@ namespace VendingMachineKata
 
             throw new ArgumentOutOfRangeException("That product is not supported");
         }
+
+        public void ReturnCoins()
+        {
+            coinReturnContents = valueInserted;
+            valueInserted = 0m;
+        }
     }
 
     public enum Product

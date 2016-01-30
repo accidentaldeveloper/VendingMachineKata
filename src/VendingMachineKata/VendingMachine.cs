@@ -25,6 +25,12 @@
             {
                 this.valueInserted += 0.10m;
             }
+
+            if (coinPhysicalDescription == "nickel")
+            {
+                this.valueInserted += 0.05m;
+            }
+
         }
     }
 }

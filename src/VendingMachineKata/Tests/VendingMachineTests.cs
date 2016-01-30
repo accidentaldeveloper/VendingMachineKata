@@ -40,5 +40,15 @@ namespace VendingMachineKata.Tests
             vendingMachine.AcceptCoin("quarter");
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.35"));
         }
+
+        [Test]
+        public void WhenCoinsAreInsertedItDisplaysTotalValue2()
+        {
+            vendingMachine.AcceptCoin("dime");
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("nickel");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.40"));
+        }
+
     }
 }

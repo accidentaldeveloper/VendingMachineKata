@@ -46,13 +46,13 @@
             switch (productName)
             {
                 case "cola":
-                    this.oneTimeDisplay = "$1.00";
+                    this.oneTimeDisplay = "PRICE $1.00";
                     break;
                 case "chips":
-                    this.oneTimeDisplay = "$0.50";
+                    this.oneTimeDisplay = "PRICE $0.50";
                     break;
                 case "candy":
-                    this.oneTimeDisplay = "$0.65";
+                    this.oneTimeDisplay = "PRICE $0.65";
                     break;
             }
         }

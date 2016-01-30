@@ -67,7 +67,7 @@ namespace VendingMachineKata.Tests
         public void WhenProductIsSelectedMachineDisplaysProductPriceThenStandardDisplay()
         {
             vendingMachine.SelectProduct("cola");
-            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$1.00"));
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $1.00"));
 
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }
@@ -76,10 +76,10 @@ namespace VendingMachineKata.Tests
         public void WhenProductIsSelectedMachineDisplaysProductPriceThenStandardDisplay2()
         {
             vendingMachine.SelectProduct("chips");
-            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.50"));
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.50"));
 
             vendingMachine.SelectProduct("candy");
-            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.65"));
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.65"));
 
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }

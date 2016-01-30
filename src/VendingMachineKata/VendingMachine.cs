@@ -43,18 +43,31 @@
 
         public void SelectProduct(string productName)
         {
+            decimal price;
+            if (TryGetProductPrice(productName, out price))
+            {
+            this.oneTimeDisplay = $"PRICE {price:C}";
+
+            }
+        }
+
+        private bool TryGetProductPrice(string productName, out decimal price)
+        {
             switch (productName)
             {
                 case "cola":
-                    this.oneTimeDisplay = "PRICE $1.00";
-                    break;
+                    price = 1m;
+                    return true;
                 case "chips":
-                    this.oneTimeDisplay = "PRICE $0.50";
-                    break;
+                    price = .50m;
+                    return true;
                 case "candy":
-                    this.oneTimeDisplay = "PRICE $0.65";
-                    break;
+                    price = .65m;
+                    return true;
             }
+
+            price = 0m;
+            return false;
         }
     }
 }

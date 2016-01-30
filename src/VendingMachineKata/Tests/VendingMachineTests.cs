@@ -5,19 +5,32 @@ namespace VendingMachineKata.Tests
     [TestFixture]
     public class VendingMachineTests
     {
+        private VendingMachine vendingMachine;
+
+        [SetUp]
+        public void CreateVendingMachine()
+        {
+            this.vendingMachine = new VendingMachine();
+        }
+
         [Test]
         public void WhenVendingMachineIsCreatedItDisplaysInsertCoin()
         {
-            var vendingMachine = new VendingMachine();
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }
 
         [Test]
         public void WhenQuarterIsInsertedItDisplays25Cents()
         {
-            var vendingMachine = new VendingMachine();
             vendingMachine.AcceptCoin("quarter");
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.25"));
+        }
+
+        [Test]
+        public void WhenDimeIsInsertedItDisplays10Cents()
+        {
+            vendingMachine.AcceptCoin("dime");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.10"));
         }
     }
 }

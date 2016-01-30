@@ -16,7 +16,15 @@
 
         public void AcceptCoin(string coinPhysicalDescription)
         {
-            this.valueInserted = 0.25m;
+            if (coinPhysicalDescription == "quarter")
+            {
+                this.valueInserted = 0.25m;
+            }
+
+            if (coinPhysicalDescription == "dime")
+            {
+                this.valueInserted = 0.10m;
+            }
         }
     }
 }

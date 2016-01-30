@@ -46,8 +46,7 @@
             decimal price;
             if (TryGetProductPrice(productName, out price))
             {
-            this.oneTimeDisplay = $"PRICE {price:C}";
-
+                this.oneTimeDisplay = $"PRICE {price:C}";
             }
         }
 

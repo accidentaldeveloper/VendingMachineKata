@@ -98,7 +98,7 @@ namespace VendingMachineKata.Tests
         }
 
         [Test]
-        public void WhenProductIsSelectedAndSufficientValueDisplayThankYouAndSetValueTo0()
+        public void WhenProductIsSelectedAndEqualValueInsertedThenDisplayThankYouAndSetValueToZero()
         {
             vendingMachine.AcceptCoin("quarter");
             vendingMachine.AcceptCoin("quarter");
@@ -106,5 +106,18 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }
+
+        [Test]
+        public void WhenProductIsSelectedAndGreaterValueInsertedThenDisplayThankYouAndSetValueToZero()
+        {
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("nickel");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.55"));
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
+        }
+
     }
 }

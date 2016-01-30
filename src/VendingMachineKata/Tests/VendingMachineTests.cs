@@ -50,5 +50,19 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.40"));
         }
 
+        [Test]
+        public void WhenPennyIsInsertedDisplayValueDoesNotChange()
+        {
+            vendingMachine.AcceptCoin("penny");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
+
+            vendingMachine.AcceptCoin("dime");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.10"));
+
+            vendingMachine.AcceptCoin("penny");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.10"));
+        }
+
+
     }
 }

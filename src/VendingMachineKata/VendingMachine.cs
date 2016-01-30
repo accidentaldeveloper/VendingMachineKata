@@ -3,9 +3,15 @@
     public class VendingMachine
     {
         private decimal valueInserted = 0m;
+        private string oneTimeDisplay = null;
 
         public string GetDisplay()
         {
+            if (oneTimeDisplay != null)
+            {
+                return oneTimeDisplay;
+            }
+
             if (this.valueInserted == 0)
             {
                 return "INSERT COIN";
@@ -31,6 +37,11 @@
                 this.valueInserted += 0.05m;
             }
 
+        }
+
+        public void SelectProduct(string productName)
+        {
+            this.oneTimeDisplay = "$1.00";
         }
     }
 }

@@ -63,6 +63,11 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.10"));
         }
 
-
+        [Test]
+        public void WhenProductIsSelectedMachineDisplaysProductPriceThen()
+        {
+            vendingMachine.SelectProduct("cola");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$1.00"));
+        }
     }
 }

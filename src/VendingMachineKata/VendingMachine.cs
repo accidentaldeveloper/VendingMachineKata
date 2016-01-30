@@ -6,6 +6,9 @@ namespace VendingMachineKata
     {
         private decimal valueInserted = 0m;
         private string oneTimeDisplay = null;
+        private decimal coinReturnContents;
+
+        public decimal CoinReturnContents => coinReturnContents;
 
         public string GetDisplay()
         {
@@ -46,10 +49,12 @@ namespace VendingMachineKata
         public void SelectProduct(Product productName)
         {
             decimal price = GetProductPrice(productName);
-            if (valueInserted >= price)
+            var difference = valueInserted - price;
+            if (difference >= 0)
             {
                 oneTimeDisplay = "THANK YOU";
                 valueInserted = 0m;
+                coinReturnContents += difference;
                 return;
             }
 

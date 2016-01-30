@@ -119,5 +119,16 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }
 
+        [Test]
+        public void WhenProductIsSelectedAndGreaterValueInsertedThenExcessGoesToCoinReturn()
+        {
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("nickel");
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.55"));
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
+            Assert.That(vendingMachine.CoinReturnContents, Is.EqualTo(.05));
+        }
     }
 }

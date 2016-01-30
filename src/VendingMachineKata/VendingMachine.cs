@@ -18,12 +18,12 @@
         {
             if (coinPhysicalDescription == "quarter")
             {
-                this.valueInserted = 0.25m;
+                this.valueInserted += 0.25m;
             }
 
             if (coinPhysicalDescription == "dime")
             {
-                this.valueInserted = 0.10m;
+                this.valueInserted += 0.10m;
             }
         }
     }

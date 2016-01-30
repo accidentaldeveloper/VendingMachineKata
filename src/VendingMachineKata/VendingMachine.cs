@@ -43,7 +43,18 @@
 
         public void SelectProduct(string productName)
         {
-            this.oneTimeDisplay = "$1.00";
+            switch (productName)
+            {
+                case "cola":
+                    this.oneTimeDisplay = "$1.00";
+                    break;
+                case "chips":
+                    this.oneTimeDisplay = "$0.50";
+                    break;
+                case "candy":
+                    this.oneTimeDisplay = "$0.65";
+                    break;
+            }
         }
     }
 }

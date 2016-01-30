@@ -66,7 +66,7 @@ namespace VendingMachineKata.Tests
         [Test]
         public void WhenProductIsSelectedMachineDisplaysProductPriceThenStandardDisplay()
         {
-            vendingMachine.SelectProduct("cola");
+            vendingMachine.SelectProduct(Product.Cola);
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $1.00"));
 
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
@@ -75,14 +75,36 @@ namespace VendingMachineKata.Tests
         [Test]
         public void WhenProductIsSelectedMachineDisplaysProductPriceThenStandardDisplay2()
         {
-            vendingMachine.SelectProduct("chips");
+            vendingMachine.SelectProduct(Product.Chips);
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.50"));
 
-            vendingMachine.SelectProduct("candy");
+            vendingMachine.SelectProduct(Product.Candy);
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.65"));
 
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
         }
 
+        [Test]
+        public void WhenProductIsSelectedAndInsufficientValueMachineDisplaysProductPriceThenValueInserted()
+        {
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.50"));
+
+            vendingMachine.SelectProduct(Product.Candy);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("PRICE $0.65"));
+
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.25"));
+        }
+
+        [Test]
+        public void WhenProductIsSelectedAndSufficientValueDisplayThankYouAndSetValueTo0()
+        {
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
+        }
     }
 }

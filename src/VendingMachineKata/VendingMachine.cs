@@ -1,4 +1,6 @@
-﻿namespace VendingMachineKata
+﻿using System;
+
+namespace VendingMachineKata
 {
     public class VendingMachine
     {
@@ -41,7 +43,7 @@
 
         }
 
-        public void SelectProduct(string productName)
+        public void SelectProduct(Product productName)
         {
             decimal price;
             if (TryGetProductPrice(productName, out price))
@@ -50,23 +52,29 @@
             }
         }
 
-        private bool TryGetProductPrice(string productName, out decimal price)
+        private bool TryGetProductPrice(Product productName, out decimal price)
         {
             switch (productName)
             {
-                case "cola":
+                case Product.Cola:
                     price = 1m;
                     return true;
-                case "chips":
+                case Product.Chips:
                     price = .50m;
                     return true;
-                case "candy":
+                case Product.Candy:
                     price = .65m;
                     return true;
             }
 
-            price = 0m;
-            return false;
+            throw new ArgumentOutOfRangeException("That product is not supported");
         }
+    }
+
+    public enum Product
+    {
+        Cola,
+        Chips,
+        Candy
     }
 }

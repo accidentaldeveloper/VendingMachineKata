@@ -8,9 +8,13 @@ namespace VendingMachineKata.Tests
         private VendingMachine vendingMachine;
 
         [SetUp]
-        public void CreateVendingMachine()
+        public void CreateAndStockVendingMachine()
         {
-            this.vendingMachine = new VendingMachine();
+            var vm = new VendingMachine();
+            vm.AddStock(Product.Candy);
+            vm.AddStock(Product.Chips);
+            vm.AddStock(Product.Cola);
+            this.vendingMachine = vm;
         }
 
         [Test]

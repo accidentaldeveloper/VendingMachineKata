@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace VendingMachineKata
 {
@@ -7,6 +9,7 @@ namespace VendingMachineKata
         private decimal valueInserted = 0m;
         private string oneTimeDisplay = null;
         private decimal coinReturnContents;
+        private readonly List<Product> stock = new List<Product>();
 
         public decimal CoinReturnContents => coinReturnContents;
 
@@ -50,9 +53,16 @@ namespace VendingMachineKata
         public void SelectProduct(Product productName)
         {
             decimal price = GetProductPrice(productName);
+            if (!stock.Contains(productName))
+            {
+                oneTimeDisplay = "SOLD OUT";
+                return;
+            }
+
             var difference = valueInserted - price;
             if (difference >= 0)
             {
+                stock.Remove(productName);
                 oneTimeDisplay = "THANK YOU";
                 valueInserted = 0m;
                 coinReturnContents += difference;
@@ -60,6 +70,17 @@ namespace VendingMachineKata
             }
 
             this.oneTimeDisplay = $"PRICE {price:C}";
+        }
+
+        public void ReturnCoins()
+        {
+            coinReturnContents = valueInserted;
+            valueInserted = 0m;
+        }
+
+        internal void AddStock(Product product)
+        {
+            this.stock.Add(product);
         }
 
         private decimal GetProductPrice(Product productName)
@@ -75,12 +96,6 @@ namespace VendingMachineKata
                 default:
                     throw new ArgumentOutOfRangeException(nameof(productName), productName, $"That product is not supported");
             }
-        }
-
-        public void ReturnCoins()
-        {
-            coinReturnContents = valueInserted;
-            valueInserted = 0m;
         }
     }
 

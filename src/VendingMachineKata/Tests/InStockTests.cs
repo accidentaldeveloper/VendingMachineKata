@@ -29,5 +29,18 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("SOLD OUT"));
         }
 
+        [Test]
+        public void WhenSelectedProductIsNotOutOfStockAndSufficientValueInsertedThenProductIsDispensedAndRemovedFromStock()
+        {
+            vendingMachine.AddStock(Product.Chips);
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.AcceptCoin("quarter");
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
+
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("SOLD OUT"));
+        }
+
     }
 }

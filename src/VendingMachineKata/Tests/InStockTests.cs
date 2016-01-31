@@ -16,10 +16,18 @@ namespace VendingMachineKata.Tests
         [Test]
         public void WhenSelectedProductIsOutOfStockThenDisplaySoldOut()
         {
+            vendingMachine.SelectProduct(Product.Chips);
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("SOLD OUT"));
+        }
+
+        [Test]
+        public void WhenSelectedProductIsOutOfStockAndSufficientValueInsertedThenDisplaySoldOut()
+        {
             vendingMachine.AcceptCoin("quarter");
             vendingMachine.AcceptCoin("quarter");
             vendingMachine.SelectProduct(Product.Chips);
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("SOLD OUT"));
         }
+
     }
 }

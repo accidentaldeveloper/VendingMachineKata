@@ -44,6 +44,7 @@ namespace VendingMachineKata
                 this.valueInserted += 0.05m;
             }
 
+            // TODO: Handle the need for pennies and other invalid coins to go to the coin return
         }
 
         public void SelectProduct(Product productName)
@@ -71,9 +72,9 @@ namespace VendingMachineKata
                     return .50m;
                 case Product.Candy:
                     return .65m;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(productName), productName, $"That product is not supported");
             }
-
-            throw new ArgumentOutOfRangeException("That product is not supported");
         }
 
         public void ReturnCoins()

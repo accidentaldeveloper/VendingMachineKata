@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace VendingMachineKata
 {
-    internal interface ICoin
+    public interface ICoin
     {
         string Description { get; }
     }

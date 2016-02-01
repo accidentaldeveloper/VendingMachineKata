@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VendingMachineKata
 {
     public class VendingMachine
     {
-        private decimal valueInserted = 0m;
+        ////private decimal valueInserted = 0m;
         private string oneTimeDisplay = null;
-        private decimal coinReturnContents;
+        private List<ICoin> coinReturnContents = new List<ICoin>();
         private readonly List<Product> stock = new List<Product>();
+        private readonly List<ValidCoin> currentSessionCoins = new List<ValidCoin>();
 
-        public decimal CoinReturnContents => coinReturnContents;
+        public IReadOnlyList<ICoin> CoinReturnContents => coinReturnContents.AsReadOnly();
 
         public string GetDisplay()
         {
@@ -22,32 +24,28 @@ namespace VendingMachineKata
                 return temp;
             }
 
-            if (this.valueInserted == 0)
+            var currentSessionValue = GetCurrentSessionCoinValue();
+            if (currentSessionValue == 0)
             {
                 return "INSERT COIN";
             }
 
-            return this.valueInserted.ToString("C");
+            return currentSessionValue.ToString("C");
         }
 
         public void AcceptCoin(string coinPhysicalDescription)
         {
-            if (coinPhysicalDescription == "quarter")
+            ValidCoin validCoin;
+            if (ValidCoin.TryCreate(coinPhysicalDescription, out validCoin))
             {
-                this.valueInserted += 0.25m;
+                this.currentSessionCoins.Add(validCoin);
+            }
+            else
+            {
+                var invalidCoin = new InvalidCoin(coinPhysicalDescription);
+                coinReturnContents.Add(invalidCoin);
             }
 
-            if (coinPhysicalDescription == "dime")
-            {
-                this.valueInserted += 0.10m;
-            }
-
-            if (coinPhysicalDescription == "nickel")
-            {
-                this.valueInserted += 0.05m;
-            }
-
-            // TODO: Handle the need for pennies and other invalid coins to go to the coin return
         }
 
         public void SelectProduct(Product productName)
@@ -59,13 +57,17 @@ namespace VendingMachineKata
                 return;
             }
 
-            var difference = valueInserted - price;
+            var currentSessionValue = GetCurrentSessionCoinValue();
+            var difference = currentSessionValue - price;
             if (difference >= 0)
             {
                 stock.Remove(productName);
                 oneTimeDisplay = "THANK YOU";
-                valueInserted = 0m;
-                coinReturnContents += difference;
+                
+                // TODO: This "throws away" the inserted coins. We cannot determine the total coins in the machine.
+                currentSessionCoins.Clear();
+                var changeCoins = new List<ICoin>();
+                coinReturnContents.AddRange(changeCoins);
                 return;
             }
 
@@ -74,13 +76,18 @@ namespace VendingMachineKata
 
         public void ReturnCoins()
         {
-            coinReturnContents = valueInserted;
-            valueInserted = 0m;
+            coinReturnContents.AddRange(this.currentSessionCoins);
+            this.currentSessionCoins.Clear();
         }
 
         internal void AddStock(Product product)
         {
             this.stock.Add(product);
+        }
+
+        private decimal GetCurrentSessionCoinValue()
+        {
+            return this.currentSessionCoins.Sum(x => x.Value);
         }
 
         private decimal GetProductPrice(Product productName)

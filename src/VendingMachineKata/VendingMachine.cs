@@ -9,11 +9,11 @@ namespace VendingMachineKata
     {
         ////private decimal valueInserted = 0m;
         private string oneTimeDisplay = null;
-        private List<ICoin> coinReturnContents = new List<ICoin>();
+        private readonly List<ICoin> coinReturnContents = new List<ICoin>();
         private readonly List<Product> stock = new List<Product>();
         private readonly List<ValidCoin> currentSessionCoins = new List<ValidCoin>();
 
-        public IReadOnlyList<ICoin> CoinReturnContents => coinReturnContents.AsReadOnly();
+        public IReadOnlyList<string> CoinReturnContents => coinReturnContents.Select(x => x.Description).ToList().AsReadOnly();
 
         public string GetDisplay()
         {
@@ -45,7 +45,6 @@ namespace VendingMachineKata
                 var invalidCoin = new InvalidCoin(coinPhysicalDescription);
                 coinReturnContents.Add(invalidCoin);
             }
-
         }
 
         public void SelectProduct(Product productName)
@@ -66,12 +65,22 @@ namespace VendingMachineKata
                 
                 // TODO: This "throws away" the inserted coins. We cannot determine the total coins in the machine.
                 currentSessionCoins.Clear();
-                var changeCoins = new List<ICoin>();
+                List<ICoin> changeCoins = MakeChange(difference);
                 coinReturnContents.AddRange(changeCoins);
                 return;
             }
 
             this.oneTimeDisplay = $"PRICE {price:C}";
+        }
+
+        private List<ICoin> MakeChange(decimal difference)
+        {
+            // Need to calculate the appropriate coins to dispense for the given amount.
+            var quarterCount = (int)Math.Floor(difference/0.25m);
+            var quarterRemainder = difference - quarterCount*0.25m;
+            var dimeCount = (int)Math.Floor(quarterRemainder / 0.10m);
+            ////var dimeRemainder = quarterRemainder - 
+            throw new NotImplementedException();
         }
 
         public void ReturnCoins()

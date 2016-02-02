@@ -144,7 +144,8 @@ namespace VendingMachineKata.Tests
 
             vendingMachine.ReturnCoins();
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
-            Assert.That(vendingMachine.CoinReturnContents, Is.EqualTo(.15));
+            var expectedCoins = new[] {"nickel", "dime"};
+            Assert.That(vendingMachine.CoinReturnContents, Is.EquivalentTo(expectedCoins));
         }
     }
 }

@@ -13,8 +13,6 @@ namespace VendingMachineKata
         private readonly List<Product> stock = new List<Product>();
         private readonly List<ValidCoin> currentSessionCoins = new List<ValidCoin>();
 
-        public IReadOnlyList<string> CoinReturnContents => coinReturnContents.Select(x => x.Description).ToList().AsReadOnly();
-
         public string GetDisplay()
         {
             if (oneTimeDisplay != null)
@@ -65,7 +63,7 @@ namespace VendingMachineKata
                 
                 // TODO: This "throws away" the inserted coins. We cannot determine the total coins in the machine.
                 currentSessionCoins.Clear();
-                List<ICoin> changeCoins = MakeChange(difference);
+                var changeCoins = MakeChange(difference);
                 coinReturnContents.AddRange(changeCoins);
                 return;
             }
@@ -73,14 +71,27 @@ namespace VendingMachineKata
             this.oneTimeDisplay = $"PRICE {price:C}";
         }
 
-        private List<ICoin> MakeChange(decimal difference)
+        ////public IEnumerable<string> PeekCoinReturn() => coinReturnContents.Select(x => x.Description).ToList();
+
+        public IEnumerable<string> EmptyCoinReturn()
+        {
+            var contents = coinReturnContents.Select(x => x.Description).ToList();
+            coinReturnContents.Clear();
+            return contents;
+        }
+
+        private IEnumerable<ValidCoin> MakeChange(decimal difference)
         {
             // Need to calculate the appropriate coins to dispense for the given amount.
-            var quarterCount = (int)Math.Floor(difference/0.25m);
-            var quarterRemainder = difference - quarterCount*0.25m;
-            var dimeCount = (int)Math.Floor(quarterRemainder / 0.10m);
+            //var quarterCount = (int)Math.Floor(difference/0.25m);
+            //var quarterRemainder = difference - quarterCount*0.25m;
+            //var dimeCount = (int)Math.Floor(quarterRemainder / 0.10m);
             ////var dimeRemainder = quarterRemainder - 
-            throw new NotImplementedException();
+            var nickelCount = (int) (difference/0.05m);
+            for (int i = 0; i < nickelCount; i++)
+            {
+                yield return new ValidCoin(ValidCoinType.Nickel, "nickel");
+            }
         }
 
         public void ReturnCoins()

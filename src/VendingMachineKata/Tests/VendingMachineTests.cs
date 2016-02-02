@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace VendingMachineKata.Tests
 {
@@ -132,7 +133,14 @@ namespace VendingMachineKata.Tests
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.55"));
             vendingMachine.SelectProduct(Product.Chips);
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("THANK YOU"));
-            Assert.That(vendingMachine.CoinReturnContents, Is.EqualTo(.05));
+            var returnedCoins = vendingMachine.EmptyCoinReturn().ToList();
+
+            // I just need to confirm that the correct value was dispensed
+            foreach (var returnedCoin in returnedCoins)
+            {
+                vendingMachine.AcceptCoin(returnedCoin);
+            }
+            Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("$0.05"));
         }
 
         [Test]
@@ -145,7 +153,7 @@ namespace VendingMachineKata.Tests
             vendingMachine.ReturnCoins();
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
             var expectedCoins = new[] {"nickel", "dime"};
-            Assert.That(vendingMachine.CoinReturnContents, Is.EquivalentTo(expectedCoins));
+            Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(expectedCoins));
         }
     }
 }

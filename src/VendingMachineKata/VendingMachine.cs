@@ -7,7 +7,6 @@ namespace VendingMachineKata
 {
     public class VendingMachine
     {
-        ////private decimal valueInserted = 0m;
         private string oneTimeDisplay = null;
         private readonly List<ICoin> coinReturnContents = new List<ICoin>();
         private readonly List<Product> stock = new List<Product>();
@@ -71,8 +70,6 @@ namespace VendingMachineKata
             this.oneTimeDisplay = $"PRICE {price:C}";
         }
 
-        ////public IEnumerable<string> PeekCoinReturn() => coinReturnContents.Select(x => x.Description).ToList();
-
         public IEnumerable<string> EmptyCoinReturn()
         {
             var contents = coinReturnContents.Select(x => x.Description).ToList();
@@ -82,11 +79,6 @@ namespace VendingMachineKata
 
         private IEnumerable<ValidCoin> MakeChange(decimal difference)
         {
-            // Need to calculate the appropriate coins to dispense for the given amount.
-            //var quarterCount = (int)Math.Floor(difference/0.25m);
-            //var quarterRemainder = difference - quarterCount*0.25m;
-            //var dimeCount = (int)Math.Floor(quarterRemainder / 0.10m);
-            ////var dimeRemainder = quarterRemainder - 
             var nickelCount = (int) (difference/0.05m);
             for (int i = 0; i < nickelCount; i++)
             {

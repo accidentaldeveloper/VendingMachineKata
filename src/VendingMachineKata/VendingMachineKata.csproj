@@ -53,6 +53,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CoinTests.cs" />
+    <Compile Include="Tests\FullProcessTest.cs" />
     <Compile Include="Tests\InStockTests.cs" />
     <Compile Include="Tests\VendingMachineTests.cs" />
     <Compile Include="VendingMachine.cs" />

@@ -76,7 +76,8 @@ namespace VendingMachineKata.Tests
 
             vendingMachine.AcceptCoin("sfdeljknesv");
             vendingMachine.AcceptCoin("penny");
-            Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(new[] { "penny", "sfdeljknesv" }));
+            vendingMachine.AcceptCoin("penny");
+            Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(new[] { "penny", "penny", "sfdeljknesv" }));
         }
 
         [Test]

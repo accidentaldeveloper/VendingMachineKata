@@ -69,6 +69,17 @@ namespace VendingMachineKata.Tests
         }
 
         [Test]
+        public void WhenInvalidCoinIsInsertedItIsPlacedInTheCoinReturn()
+        {
+            vendingMachine.AcceptCoin("penny");
+            Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(new[] {"penny"}));
+
+            vendingMachine.AcceptCoin("sfdeljknesv");
+            vendingMachine.AcceptCoin("penny");
+            Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(new[] { "penny", "sfdeljknesv" }));
+        }
+
+        [Test]
         public void WhenProductIsSelectedMachineDisplaysProductPriceThenStandardDisplay()
         {
             vendingMachine.SelectProduct(Product.Cola);
@@ -152,7 +163,7 @@ namespace VendingMachineKata.Tests
 
             vendingMachine.ReturnCoins();
             Assert.That(vendingMachine.GetDisplay(), Is.EqualTo("INSERT COIN"));
-            var expectedCoins = new[] {"nickel", "dime"};
+            var expectedCoins = new[] { "nickel", "dime" };
             Assert.That(vendingMachine.EmptyCoinReturn(), Is.EquivalentTo(expectedCoins));
         }
     }
